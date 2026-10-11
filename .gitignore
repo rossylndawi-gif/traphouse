@@ -1,2 +1,10 @@
-# Original full-size photos (renamed copies live in images/)
+# Original full-size photos (renamed copies live in public/images/)
 image/
+
+node_modules/
+.next/
+out/
+next-env.d.ts
+*.tsbuildinfo
+# generated before each build from the Google Sheet
+public/products.yml
