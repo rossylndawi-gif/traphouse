@@ -1,0 +1,329 @@
+# ─────────────────────────────────────────────────────────────
+#  TRAP HOUSE SOCIETY — PRODUCT LIST
+#  Every product on the website comes from this file.
+#  See README.md for how to edit it (prices, sold out, new products).
+#
+#  Categories you can use:
+#    Shirts, T-Shirts, Polos & Knits, Tanks, Hoodies & Jackets,
+#    Bottoms, Boxers, Accessories
+#
+#  price:     45000  or  "45,000 FRW"  or  TBD (shows "Price on request")
+#  image:     main photo (file name inside the images folder)
+#  colors:    the colours you sell
+#  images:    (optional) one photo per colour, in the SAME order as colors
+#  gallery:   (optional) extra photos, e.g. the back of a hoodie
+#  sizes:     (optional) e.g. [S, M, L, XL] — shows size buttons
+#  sold_out:  true = shows SOLD OUT and greys the item out
+# ─────────────────────────────────────────────────────────────
+
+# ── Shirts ───────────────────────────────────────────────────
+
+- name: Cropped Button-Up Shirt
+  category: Shirts
+  price: TBD
+  colors: [blue plaid, red plaid, red gingham, blue pink plaid, blue madras, pink]
+  images:
+    - shirt-cropped-plaid-blue.jpg
+    - shirt-cropped-plaid-red.jpg
+    - shirt-cropped-gingham-red.jpg
+    - shirt-cropped-plaid-blue-pink.jpg
+    - shirt-cropped-madras-blue.jpg
+    - shirt-cropped-pink.jpg
+  image: shirt-cropped-plaid-blue.jpg
+  sold_out: false
+
+- name: Adidas Pinstripe Jersey & Track Pants Set
+  category: Shirts
+  price: TBD
+  colors: [white red]
+  image: set-adidas-pinstripe-white-red.jpg
+  sold_out: false
+
+# ── T-Shirts ─────────────────────────────────────────────────
+
+- name: Hellstar Logo Tee
+  category: T-Shirts
+  price: TBD
+  colors: [white]
+  image: tee-hellstar-white-front.jpg
+  gallery: [tee-hellstar-white-back.jpg]
+  sold_out: false
+
+- name: Acne Studios Stockholm Tee
+  category: T-Shirts
+  price: TBD
+  colors: [light blue]
+  image: tee-acne-stockholm-light-blue.jpg
+  sold_out: false
+
+- name: Rick Owens Face Print Tee
+  category: T-Shirts
+  price: TBD
+  colors: [white]
+  image: tee-rick-owens-face-white.jpg
+  sold_out: false
+
+- name: Collage Print Raglan Tee
+  category: T-Shirts
+  price: TBD
+  colors: [cream black]
+  image: tee-raglan-collage-cream-black.jpg
+  sold_out: false
+
+- name: Chrome Hearts Horseshoe Tee
+  category: T-Shirts
+  price: TBD
+  colors: [white]
+  image: tee-chrome-hearts-horseshoe-white-front.jpg
+  gallery: [tee-chrome-hearts-horseshoe-white-back.jpg]
+  sold_out: false
+
+- name: Chrome Hearts Cross Patch Tee
+  category: T-Shirts
+  price: TBD
+  colors: [white]
+  image: tee-chrome-hearts-crosses-white.jpg
+  sold_out: false
+
+- name: Represent Double Distilled Tee
+  category: T-Shirts
+  price: TBD
+  colors: [black]
+  image: tee-represent-dove-black.jpg
+  sold_out: false
+
+- name: Represent Thoroughbred Tee
+  category: T-Shirts
+  price: TBD
+  colors: [sage]
+  image: tee-graphic-sage-dogs.jpg
+  sold_out: false
+
+- name: AMI Heart Raglan Tee
+  category: T-Shirts
+  price: TBD
+  colors: [green, red]
+  images: [tee-ami-raglan-green.jpg, tee-ami-raglan-red.jpg]
+  image: tee-ami-raglan-green.jpg
+  sold_out: false
+
+- name: Wreath Print Long-Sleeve Tee
+  category: T-Shirts
+  price: TBD
+  colors: [navy]
+  image: tee-longsleeve-wreath-navy.jpg
+  sold_out: false
+
+# ── Polos & Knits ────────────────────────────────────────────
+
+- name: Striped Long-Sleeve Polo
+  category: Polos & Knits
+  price: TBD
+  colors: [blue]
+  image: polo-striped-longsleeve-blue.jpg
+  sold_out: false
+
+- name: Chrome Hearts Striped Polo
+  category: Polos & Knits
+  price: TBD
+  colors: [black pink]
+  image: polo-chrome-hearts-striped-black-front.jpg
+  gallery: [polo-chrome-hearts-striped-black-back.jpg]
+  sold_out: false
+
+- name: Aztec Quarter-Zip Pullover
+  category: Polos & Knits
+  price: TBD
+  colors: [brown]
+  image: knit-quarter-zip-aztec-brown.jpg
+  sold_out: false
+
+- name: Ralph Lauren Quarter-Zip Sweater
+  category: Polos & Knits
+  price: TBD
+  colors: [orange]
+  image: knit-quarter-zip-ralph-lauren-orange.jpg
+  sold_out: false
+
+# ── Tanks ────────────────────────────────────────────────────
+
+- name: Y/Project Paris Tank
+  category: Tanks
+  price: TBD
+  colors: [white]
+  image: tank-yproject-white.jpg
+  sold_out: false
+
+- name: Represent Double Distilled Tank
+  category: Tanks
+  price: TBD
+  colors: [black]
+  image: tank-represent-dove-black.jpg
+  sold_out: false
+
+# ── Hoodies & Jackets ────────────────────────────────────────
+
+- name: Eyes Zip Hoodie
+  category: Hoodies & Jackets
+  price: TBD
+  colors: [grey]
+  image: hoodie-zip-eyes-grey-front.jpg
+  gallery: [hoodie-zip-eyes-grey-back.jpg]
+  sold_out: false
+
+- name: Mask Zip Hoodie
+  category: Hoodies & Jackets
+  price: TBD
+  colors: [black]
+  image: hoodie-zip-mask-black-front.jpg
+  gallery: [hoodie-zip-mask-black-back.jpg]
+  sold_out: false
+
+- name: Mood Zip Hoodie
+  category: Hoodies & Jackets
+  price: TBD
+  colors: [grey]
+  image: hoodie-zip-mood-grey-front.jpg
+  gallery: [hoodie-zip-mood-grey-back.jpg]
+  sold_out: false
+
+- name: Fear Zip Hoodie
+  category: Hoodies & Jackets
+  price: TBD
+  colors: [grey]
+  image: hoodie-zip-fear-grey-front.jpg
+  gallery: [hoodie-zip-fear-grey-back.jpg]
+  sold_out: false
+
+- name: Kanji Sun Zip Hoodie
+  category: Hoodies & Jackets
+  price: TBD
+  colors: [grey]
+  image: hoodie-zip-kanji-sun-grey-front.jpg
+  gallery: [hoodie-zip-kanji-sun-grey-back.jpg]
+  sold_out: false
+
+- name: Sacrifice Zip Hoodie
+  category: Hoodies & Jackets
+  price: TBD
+  colors: [grey]
+  image: hoodie-zip-sacrifice-grey-front.jpg
+  gallery: [hoodie-zip-sacrifice-grey-back.jpg]
+  sold_out: false
+
+- name: Work Jacket
+  category: Hoodies & Jackets
+  price: TBD
+  colors: [rust]
+  image: jacket-work-rust-corduroy-collar.jpg
+  sold_out: false
+
+# ── Bottoms ──────────────────────────────────────────────────
+
+- name: Painted Carpenter Jeans
+  category: Bottoms
+  price: TBD
+  colors: [black]
+  image: jeans-painted-black.jpg
+  sold_out: false
+
+- name: Flared Jeans Grey Wash
+  category: Bottoms
+  price: TBD
+  colors: [grey]
+  image: jeans-flared-grey.jpg
+  sold_out: false
+
+- name: Flared Jeans Black Wash
+  category: Bottoms
+  price: TBD
+  colors: [black]
+  image: jeans-flared-black.jpg
+  sold_out: false
+
+- name: Baggy Jeans Vintage Wash
+  category: Bottoms
+  price: TBD
+  colors: [vintage blue]
+  image: jeans-baggy-vintage-wash.jpg
+  sold_out: false
+
+- name: Wide-Leg Sweatpants Black
+  category: Bottoms
+  price: TBD
+  colors: [black]
+  image: sweatpants-wide-black.jpg
+  sold_out: false
+
+- name: Wide-Leg Sweatpants Pink
+  category: Bottoms
+  price: TBD
+  colors: [pink]
+  image: sweatpants-wide-pink.jpg
+  sold_out: false
+
+- name: Wide-Leg Sweatpants Grey
+  category: Bottoms
+  price: TBD
+  colors: [grey]
+  image: sweatpants-wide-grey.jpg
+  sold_out: false
+
+# ── Boxers ───────────────────────────────────────────────────
+
+- name: Designer Boxers
+  category: Boxers
+  price: TBD
+  colors:
+    - Supreme black
+    - Supreme navy
+    - Corteiz white
+    - Corteiz black
+    - Corteiz navy
+    - Corteiz Alcatraz white
+    - Corteiz Alcatraz grey
+    - Corteiz Alcatraz black
+    - Syna white
+    - Syna grey
+    - Champion black
+    - Chrome Hearts white
+    - Prada black
+    - PSD white
+  images:
+    - boxers-supreme-black.jpg
+    - boxers-supreme-navy.jpg
+    - boxers-corteiz-script-white.jpg
+    - boxers-corteiz-script-black.jpg
+    - boxers-corteiz-script-navy.jpg
+    - boxers-corteiz-alcatraz-white.jpg
+    - boxers-corteiz-alcatraz-grey.jpg
+    - boxers-corteiz-alcatraz-black.jpg
+    - boxers-syna-white.jpg
+    - boxers-syna-grey.jpg
+    - boxers-champion-black.jpg
+    - boxers-chrome-hearts-white.jpg
+    - boxers-prada-black.jpg
+    - boxers-psd-white.jpg
+  image: boxers-collage.jpg
+  sold_out: false
+
+# ── Accessories ──────────────────────────────────────────────
+
+- name: Goyard Saint Leger Backpack
+  category: Accessories
+  price: TBD
+  colors: [blue]
+  image: bag-backpack-goyard-blue.jpg
+  gallery:
+    - bag-backpack-goyard-blue-front.jpg
+    - bag-backpack-goyard-blue-back.jpg
+    - bag-backpack-goyard-blue-worn-1.jpg
+    - bag-backpack-goyard-blue-worn-2.jpg
+  sold_out: false
+
+- name: Cross Patch Crossbody Bag
+  category: Accessories
+  price: TBD
+  colors: [black]
+  image: bag-crossbody-black-crosses.jpg
+  sold_out: false
