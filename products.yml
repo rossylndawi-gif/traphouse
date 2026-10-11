@@ -5,13 +5,52 @@
 #  It is refreshed automatically from the sheet every hour.
 # ─────────────────────────────────────────────────────────────
 
-- name: Cropped Button-Up Shirt
-  category: Shirts
+- name: Cropped Button-Up Shirt — Blue Plaid
+  category: Cropped Shirts
   price: 20000
   size: M
-  colors: [blue plaid, red plaid, red gingham, blue pink plaid, blue madras, pink]
-  images: [shirt-cropped-plaid-blue.jpg, shirt-cropped-plaid-red.jpg, shirt-cropped-gingham-red.jpg, shirt-cropped-plaid-blue-pink.jpg, shirt-cropped-madras-blue.jpg, shirt-cropped-pink.jpg]
+  colors: [blue plaid]
   image: shirt-cropped-plaid-blue.jpg
+  sold_out: false
+
+- name: Cropped Button-Up Shirt — Red Plaid
+  category: Cropped Shirts
+  price: 20000
+  size: M
+  colors: [red plaid]
+  image: shirt-cropped-plaid-red.jpg
+  sold_out: false
+
+- name: Cropped Button-Up Shirt — Red Gingham
+  category: Cropped Shirts
+  price: 20000
+  size: M
+  colors: [red gingham]
+  image: shirt-cropped-gingham-red.jpg
+  sold_out: false
+
+- name: Cropped Button-Up Shirt — Blue Pink Plaid
+  category: Cropped Shirts
+  price: 20000
+  size: M
+  colors: [blue pink plaid]
+  image: shirt-cropped-plaid-blue-pink.jpg
+  sold_out: false
+
+- name: Cropped Button-Up Shirt — Blue Madras
+  category: Cropped Shirts
+  price: 20000
+  size: M
+  colors: [blue madras]
+  image: shirt-cropped-madras-blue.jpg
+  sold_out: false
+
+- name: Cropped Button-Up Shirt — Pink
+  category: Cropped Shirts
+  price: 20000
+  size: M
+  colors: [pink]
+  image: shirt-cropped-pink.jpg
   sold_out: false
 
 - name: Adidas Pinstripe Jersey & Track Pants Set

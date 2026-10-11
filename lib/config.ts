@@ -17,6 +17,7 @@ export const MAPS_URL =
 
 /** Order of the category buttons. Categories in the sheet but not listed here appear at the end. */
 export const CATEGORY_ORDER = [
+  "Cropped Shirts",
   "Shirts",
   "T-Shirts",
   "Polos & Knits",

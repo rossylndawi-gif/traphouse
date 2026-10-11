@@ -31,7 +31,7 @@ The website reads every product from your Google Sheet. Each row is one product.
 | **Main Photo** | The photo shown in the product list | `hoodie-fear-front.jpg` |
 | **Extra Photos** | More photos (back view, someone wearing it), separated by commas. Can be empty | `hoodie-fear-back.jpg` |
 
-**Categories:** `Shirts`, `T-Shirts`, `Polos & Knits`, `Tanks`, `Hoodies & Jackets`, `Bottoms`, `Boxers`, `Accessories`.
+**Categories:** `Cropped Shirts`, `Shirts`, `T-Shirts`, `Polos & Knits`, `Tanks`, `Hoodies & Jackets`, `Bottoms`, `Boxers`, `Accessories`.
 If you type a new category name, the website adds a button for it automatically.
 
 ### Change a price
