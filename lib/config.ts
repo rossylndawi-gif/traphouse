@@ -27,9 +27,10 @@ export const CATEGORY_ORDER = [
   "Accessories",
 ];
 
-/** Must match basePath in next.config.ts. */
-export const BASE_PATH = "/traphouse";
-export const SITE_URL = "https://rossylndawi-gif.github.io" + BASE_PATH;
+/** Set in next.config.ts: "" on Vercel, "/traphouse" on GitHub Pages. */
+export const BASE_PATH = process.env.NEXT_PUBLIC_BASE_PATH ?? "/traphouse";
+/** Full public address of the site (used for link previews). */
+export const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://rossylndawi-gif.github.io/traphouse";
 
 /** Public file URL, e.g. asset("images/x.jpg") → "/traphouse/images/x.jpg". */
 export const asset = (path: string) => `${BASE_PATH}/${path.replace(/^\/+/, "")}`;
