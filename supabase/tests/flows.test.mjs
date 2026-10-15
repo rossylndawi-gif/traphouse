@@ -406,6 +406,19 @@ test("hidden products can't be ordered", async () => {
   await as(ADMIN, "update public.products set active = true where id = $1", [tee.id]);
 });
 
+test("deleting an admin's login keeps their orders and stock history", async () => {
+  const STAFF = "00000000-0000-4000-8000-00000000000c";
+  await as("postgres", `insert into auth.users (id, email) values ('${STAFF}', 'staff@example.com')`);
+  await as("postgres", `insert into public.admins (user_id) values ('${STAFF}')`);
+  const XL = variantOf((await catalog()).find((p) => p.id === tee.id), "XL").id;
+  await rpc(STAFF, "restock", { p_variant_id: XL, p_qty: 1 });
+  const sale = await rpc(STAFF, "record_sale", { p_items: [{ variant_id: XL, qty: 1, unit_price: 1000 }] });
+  await as("postgres", `delete from auth.users where id = '${STAFF}'`);
+  const [o] = await as("postgres", "select status, admin_id from public.orders where code = $1", [sale.code]);
+  assert.deepEqual(o, { status: "confirmed", admin_id: null });
+  assert.equal((await as("postgres", `select count(*)::int as n from public.admins where user_id = '${STAFF}'`))[0].n, 0);
+});
+
 test("dashboard numbers", async () => {
   const s = await rpc(ADMIN, "admin_stats");
   const inv = await as(ADMIN, "select sum(on_hand)::int as on_hand, sum(reserved)::int as reserved from public.inventory");

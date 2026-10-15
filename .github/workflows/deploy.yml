@@ -4,8 +4,9 @@ on:
   push:
     branches: [main]
   # Hourly rebuild: refreshes product page titles/previews and the backup
-  # products.yml from the Google Sheet. Prices, sizes and sold-out status
-  # update on the live site without this (the page reads the sheet directly).
+  # products.yml from Supabase, and keeps the free Supabase project from
+  # pausing. Stock and prices update on the live site without this (the
+  # page reads Supabase directly).
   schedule:
     - cron: "17 * * * *"
   workflow_dispatch:
@@ -19,10 +20,29 @@ concurrency:
   group: pages
   cancel-in-progress: false
 
+env:
+  # Settings → Secrets and variables → Actions. Both are public values
+  # (they end up in the website); the secret key never goes here.
+  NEXT_PUBLIC_SUPABASE_URL: ${{ secrets.NEXT_PUBLIC_SUPABASE_URL }}
+  NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY: ${{ secrets.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY }}
+
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
+      # Free Supabase projects pause after a week without requests.
+      - name: Keep Supabase awake
+        run: |
+          if [ -z "$NEXT_PUBLIC_SUPABASE_URL" ] || [ -z "$NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY" ]; then
+            echo "::error::Add the NEXT_PUBLIC_SUPABASE_URL and NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY repository secrets"
+            exit 1
+          fi
+          curl --silent --show-error --fail --retry 3 --retry-delay 10 --max-time 30 \
+            -X POST "$NEXT_PUBLIC_SUPABASE_URL/rest/v1/rpc/shop_catalog" \
+            -H "apikey: $NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY" \
+            -H "Content-Type: application/json" -d '{}' -o /dev/null \
+            && echo "Supabase answered" \
+            || echo "::warning::Supabase did not answer; the site is built from the backup products.yml"
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
