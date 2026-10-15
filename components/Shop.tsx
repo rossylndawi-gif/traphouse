@@ -2,9 +2,9 @@
 
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
-import { useEffect, useRef, type FormEvent } from "react";
+import { useEffect, useRef, useState, type FormEvent } from "react";
 import { priceText, sizeNames, slugify, type Product } from "@/lib/products";
-import { SearchIcon } from "./icons";
+import { ChevronIcon, SearchIcon } from "./icons";
 import Photo from "./Photo";
 import { useProducts } from "./Store";
 
@@ -29,19 +29,80 @@ export function FilterChips({ active }: { active?: string }) {
   );
 }
 
+/** Every photo of a product: main, extra views, then the other colours. */
+export const photosOf = (p: Product) => [...new Set([p.image, ...p.gallery, ...p.colorImages.filter((f): f is string => !!f)])];
+
+/** Card photo: swipe left/right (or use the arrows on desktop) to see the other photos. */
+function CardPhotos({ p, eager }: { p: Product; eager: boolean }) {
+  const track = useRef<HTMLDivElement>(null);
+  const [index, setIndex] = useState(0);
+  const files = photosOf(p);
+  const many = files.length > 1;
+  const href = `/product/${p.id}/`;
+
+  const go = (i: number) => {
+    const t = track.current;
+    if (!t) return;
+    const n = (i + files.length) % files.length;
+    const smooth = !matchMedia("(prefers-reduced-motion: reduce)").matches;
+    t.scrollTo({ left: n * t.clientWidth, behavior: smooth ? "smooth" : "auto" });
+  };
+
+  return (
+    <div className="group/photos relative">
+      <div
+        ref={track}
+        onScroll={(e) => setIndex(Math.round(e.currentTarget.scrollLeft / e.currentTarget.clientWidth))}
+        className="no-scrollbar flex aspect-[4/5] snap-x snap-mandatory overflow-x-auto overflow-y-hidden overscroll-x-contain"
+        data-testid="card-photos"
+      >
+        {files.map((f, i) => (
+          <Link
+            key={f + i}
+            href={href}
+            tabIndex={i === 0 ? undefined : -1}
+            aria-hidden={i === 0 ? undefined : true}
+            className="block size-full shrink-0 basis-full snap-center overflow-hidden"
+          >
+            <Photo
+              file={f}
+              alt={i === 0 ? p.name : ""}
+              eager={eager && i === 0}
+              className={`size-full object-contain transition-transform duration-700 ease-out-expo group-hover:scale-[1.03] ${p.soldOut ? "sold-img" : ""}`}
+            />
+          </Link>
+        ))}
+      </div>
+      {p.soldOut ? <SoldBadge /> : p.isNew && <NewBadge />}
+      {many && (
+        <>
+          {(["prev", "next"] as const).map((d) => (
+            <button
+              key={d}
+              type="button"
+              onClick={() => go(index + (d === "prev" ? -1 : 1))}
+              aria-label={`${d === "prev" ? "Previous" : "Next"} photo of ${p.name}`}
+              className={`absolute top-1/2 -mt-4 hidden size-8 place-items-center rounded-full border border-fg bg-white/90 opacity-0 transition-opacity group-hover/photos:opacity-100 focus-visible:opacity-100 [@media(hover:hover)]:grid ${d === "prev" ? "left-1.5" : "right-1.5"}`}
+            >
+              <ChevronIcon dir={d === "prev" ? "left" : "right"} size={12} />
+            </button>
+          ))}
+          <div className="pointer-events-none absolute inset-x-0 bottom-1.5 flex justify-center gap-1" aria-hidden="true">
+            {files.map((f, i) => (
+              <span key={f + i} className={`block size-1.5 rounded-full transition-colors ${i === index ? "bg-fg" : "bg-line"}`} />
+            ))}
+          </div>
+        </>
+      )}
+    </div>
+  );
+}
+
 export function ProductCard({ p, i }: { p: Product; i: number }) {
   return (
-    <article className="reveal" style={{ "--d": `${(i % 4) * 50}ms` } as React.CSSProperties} data-testid="card" data-sold={p.soldOut || undefined}>
-      <Link href={`/product/${p.id}/`} className="group block">
-        <div className="relative aspect-[4/5] overflow-hidden">
-          <Photo
-            file={p.image}
-            alt={p.name}
-            eager={i < 4}
-            className={`size-full object-contain transition-transform duration-700 ease-out-expo group-hover:scale-[1.03] ${p.soldOut ? "sold-img" : ""}`}
-          />
-          {p.soldOut ? <SoldBadge /> : p.isNew && <NewBadge />}
-        </div>
+    <article className="reveal group" style={{ "--d": `${(i % 4) * 50}ms` } as React.CSSProperties} data-testid="card" data-sold={p.soldOut || undefined}>
+      <CardPhotos p={p} eager={i < 4} />
+      <Link href={`/product/${p.id}/`} className="block" tabIndex={-1}>
         <h2 className="mt-2.5 mb-0.5 text-[13px] leading-snug font-semibold tracking-[0.02em] uppercase underline-offset-3 group-hover:underline">{p.name}</h2>
         <p className="text-[13px] tabular-nums">
           {p.soldOut ? <span className="sr-only">Sold out. </span> : p.isNew && <span className="sr-only">New. </span>}
