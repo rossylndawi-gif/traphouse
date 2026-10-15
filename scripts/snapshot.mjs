@@ -41,6 +41,7 @@ async function fromSupabase() {
     ...(p.colour_photos?.length ? { colour_photos: p.colour_photos } : {}),
     main_photo: p.main_photo,
     ...(p.extra_photos?.length ? { extra_photos: p.extra_photos } : {}),
+    ...(p.created_at ? { created_at: p.created_at } : {}),
     variants: p.variants.map((v) => ({ id: v.id, size: v.size, colour: v.colour, available: v.available })),
   }));
 }

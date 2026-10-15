@@ -4,6 +4,8 @@
  * Runs in the browser (live data) and at build time (page titles/previews).
  */
 
+import { NEW_DAYS } from "./config";
+
 export type Variant = {
   id: string;
   size: string;
@@ -28,6 +30,8 @@ export type Product = {
   variants: Variant[];
   /** Every size is at 0. */
   soldOut: boolean;
+  /** Added in the admin within the last NEW_DAYS days. */
+  isNew: boolean;
 };
 
 /** One product as shop_catalog() returns it. */
@@ -40,6 +44,7 @@ export type CatalogItem = {
   colour_photos: string[];
   main_photo: string;
   extra_photos: string[];
+  created_at?: string;
   variants: { id: string; size: string; colour: string; available: number }[];
 };
 
@@ -71,8 +76,9 @@ export const colorSoldOut = (p: Product, color: string) => sizesFor(p, color).ev
 
 /* ── Catalogue → products ─────────────────────────────── */
 
-export function fromCatalog(data: unknown): Product[] {
+export function fromCatalog(data: unknown, now = Date.now()): Product[] {
   if (!Array.isArray(data)) throw new Error("catalogue should be a list of products");
+  const newSince = now - NEW_DAYS * 86400_000;
   return data.flatMap((d): Product[] => {
     const o = (d ?? {}) as Partial<CatalogItem>;
     if (!o.slug || !o.name) return [];
@@ -96,6 +102,7 @@ export function fromCatalog(data: unknown): Product[] {
         gallery: strings(o.extra_photos).filter(Boolean),
         variants,
         soldOut: variants.every((v) => v.available <= 0),
+        isNew: !!o.created_at && new Date(o.created_at).getTime() > newSince,
       },
     ];
   });

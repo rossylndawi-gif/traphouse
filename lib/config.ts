@@ -12,8 +12,11 @@ export const MAX_PER_ITEM = 5;
 export const MAX_PER_ORDER = 15;
 
 /** WhatsApp number orders go to: country code + number, no "+" or spaces. */
-export const WHATSAPP_NUMBER = "250791449915";
-export const WHATSAPP_DISPLAY = "+250 791 449 915";
+export const WHATSAPP_NUMBER = "250791206998";
+export const WHATSAPP_DISPLAY = "+250 791 206 998";
+
+/** A product shows a "NEW" badge for this many days after it's added in the admin. */
+export const NEW_DAYS = 14;
 
 export const SHOP_NAME = "Trap House Society";
 export const ADDRESS = "Remera Kisimenti, behind Ecobank, KG 18, Kigali, Rwanda";

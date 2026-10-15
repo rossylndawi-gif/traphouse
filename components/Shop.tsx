@@ -40,11 +40,11 @@ export function ProductCard({ p, i }: { p: Product; i: number }) {
             eager={i < 4}
             className={`size-full object-contain transition-transform duration-700 ease-out-expo group-hover:scale-[1.03] ${p.soldOut ? "sold-img" : ""}`}
           />
-          {p.soldOut && <SoldBadge />}
+          {p.soldOut ? <SoldBadge /> : p.isNew && <NewBadge />}
         </div>
         <h2 className="mt-2.5 mb-0.5 text-[13px] leading-snug font-semibold tracking-[0.02em] uppercase underline-offset-3 group-hover:underline">{p.name}</h2>
         <p className="text-[13px] tabular-nums">
-          {p.soldOut && <span className="sr-only">Sold out. </span>}
+          {p.soldOut ? <span className="sr-only">Sold out. </span> : p.isNew && <span className="sr-only">New. </span>}
           <span className={p.soldOut ? "text-muted line-through" : ""}>{priceText(p)}</span>
         </p>
         {sizeNames(p).length > 0 && (
@@ -63,6 +63,16 @@ export const SoldBadge = ({ large }: { large?: boolean }) => (
     className={`pointer-events-none absolute z-2 bg-fg font-extrabold tracking-[0.12em] text-white uppercase ${large ? "top-3 left-3 px-3 py-2 text-[13px]" : "top-2 left-2 px-2 py-1.5 text-[11px]"}`}
   >
     Sold out
+  </span>
+);
+
+/** Shown for NEW_DAYS days after a product is added in the admin. */
+export const NewBadge = ({ large }: { large?: boolean }) => (
+  <span
+    aria-hidden="true"
+    className={`pointer-events-none absolute z-2 border border-fg bg-white font-extrabold tracking-[0.12em] text-fg uppercase ${large ? "top-3 left-3 px-3 py-2 text-[13px]" : "top-2 left-2 px-2 py-1.5 text-[11px]"}`}
+  >
+    New
   </span>
 );
 

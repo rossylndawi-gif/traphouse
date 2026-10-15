@@ -114,6 +114,7 @@ test("admin creates a product with sizes; initial stock is logged", async () => 
   assert.deepEqual(tee.variants.map((v) => [v.size, v.available]), [["M", 2], ["L", 1]]);
   assert.equal(variantOf(shirt, "M", "pink").available, 0);
   assert.equal("on_hand" in tee.variants[0], false, "the shop never sees on_hand");
+  assert.ok(Date.now() - new Date(tee.created_at).getTime() < 60_000, "the catalogue says when a product was added (NEW badge)");
 });
 
 test("save_product rejects bad input", async () => {

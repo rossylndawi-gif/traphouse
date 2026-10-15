@@ -3,7 +3,7 @@
 Your shop website: **https://rossylndawi-gif.github.io/traphouse/**
 Your shop admin: **https://rossylndawi-gif.github.io/traphouse/admin/**
 
-Customers browse the products, pick a size, and send their order to you on WhatsApp (+250 791 449 915). When they send an order, the items are **held for them for 24 hours** so nobody else can buy them, and the WhatsApp message carries an order code like **TH-1042**.
+Customers browse the products, pick a size, and send their order to you on WhatsApp (+250 791 206 998). When they send an order, the items are **held for them for 24 hours** so nobody else can buy them, and the WhatsApp message carries an order code like **TH-1042**.
 
 Everything else — products, photos, stock, orders and sales — you manage from the **shop admin** on your phone. The Google Sheet is no longer used.
 
@@ -56,7 +56,7 @@ Each size of a product has its own count. The admin shows four numbers for every
 4. **Colours** (optional): tap **+ Add colour**, type the colour, and add a photo of that colour if you have one.
 5. **Sizes & stock:** for each size, type the size (`M`, `32`, `One Size`…) and use **−** / **+** to set how many you have. Tap **+ Add size** for more sizes.
    If a product comes in several colours and you want to count each colour separately, add one row per size and colour, and pick the colour in each row.
-6. Tap **Add product**. It's in the shop straight away.
+6. Tap **Add product**. It's in the shop straight away, with a **NEW** badge for the first 14 days.
 
 Photos look best on a plain white background.
 
@@ -80,7 +80,7 @@ Open the product and tap the **Visible in the shop** switch at the top. It chang
 
 ## Orders from the website
 
-When a customer taps **Order on WhatsApp**, you get a WhatsApp message like *"I'd like to order (order TH-1042)…"* and the order appears under **Orders → Waiting**, with the customer's name and phone, the items, and how much time is left.
+When a customer taps **Order on WhatsApp**, you get a WhatsApp message like *"I'd like to order (order TH-1042)…"*, with a link to each product so you can see exactly which item it is, and the order appears under **Orders → Waiting**, with the customer's name and phone, the items, and how much time is left.
 
 - **Confirm** — once you've agreed with the customer (paid, or delivery arranged). The items are counted as sold and leave your stock.
 - **Cancel** — if the customer changes their mind or doesn't answer. Tap **Cancel**, then **Tap to cancel** to be sure. The items go back on sale.

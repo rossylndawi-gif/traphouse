@@ -7,10 +7,10 @@ import { colorSoldOut, priceText, sizeNames, sizesFor, slugify, type Product, ty
 import { askMessage, waUrl } from "@/lib/whatsapp";
 import { ChevronIcon, WhatsAppIcon } from "./icons";
 import Photo from "./Photo";
-import { SoldBadge } from "./Shop";
+import { NewBadge, SoldBadge } from "./Shop";
 import { useCart, useProducts, useUI } from "./Store";
 
-function Gallery({ files, alt, sold }: { files: string[]; alt: string; sold: boolean }) {
+function Gallery({ files, alt, sold, isNew }: { files: string[]; alt: string; sold: boolean; isNew: boolean }) {
   const track = useRef<HTMLDivElement>(null);
   const [index, setIndex] = useState(0);
   const many = files.length > 1;
@@ -54,7 +54,7 @@ function Gallery({ files, alt, sold }: { files: string[]; alt: string; sold: boo
           </div>
         ))}
       </div>
-      {sold && <SoldBadge large />}
+      {sold ? <SoldBadge large /> : isNew && <NewBadge large />}
       {many && (
         <>
           {(["prev", "next"] as const).map((d) => (
@@ -162,7 +162,7 @@ function ProductDetail({ p }: { p: Product }) {
         <Link href={`/?category=${slugify(p.category)}`} className="label mt-1.5 inline-flex min-h-11 items-center gap-2">
           <ChevronIcon /> {p.category}
         </Link>
-        <Gallery files={files} alt={p.name} sold={soldOut} />
+        <Gallery files={files} alt={p.name} sold={soldOut} isNew={p.isNew} />
       </div>
 
       <div className="lg:pt-14">
