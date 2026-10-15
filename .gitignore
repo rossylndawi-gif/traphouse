@@ -6,5 +6,9 @@ node_modules/
 out/
 next-env.d.ts
 *.tsbuildinfo
-# generated before each build from the Google Sheet
+# generated before each build from Supabase
 public/products.yml
+
+# keys (the secret key must never be committed)
+.env
+.env*.local
