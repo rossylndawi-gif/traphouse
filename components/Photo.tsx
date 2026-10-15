@@ -1,9 +1,12 @@
 "use client";
 
 import { useState } from "react";
-import { photo } from "@/lib/config";
+import { localPhoto, photo } from "@/lib/config";
 
-/** Product photo from public/images; shows a grey box if the file is missing. */
+/**
+ * Product photo from Supabase Storage. If that fails, tries the copy in
+ * public/images (photos imported from the old site), then shows a grey box.
+ */
 export default function Photo({
   file,
   alt,
@@ -15,19 +18,22 @@ export default function Photo({
   className?: string;
   eager?: boolean;
 }) {
-  const [broken, setBroken] = useState<string | null>(null);
-  if (broken === file) return <span role="img" aria-label={alt || undefined} className={`block bg-soft ${className}`} />;
+  const [failed, setFailed] = useState<{ file: string; tries: number }>({ file: "", tries: 0 });
+  const tries = failed.file === file ? failed.tries : 0;
+  const src = [photo(file), localPhoto(file)].filter(Boolean)[tries] as string | undefined;
+  if (!file || !src) return <span role="img" aria-label={alt || undefined} className={`block bg-soft ${className}`} />;
   return (
     // eslint-disable-next-line @next/next/no-img-element
     <img
-      src={photo(file)}
+      key={src}
+      src={src}
       alt={alt}
       loading={eager ? "eager" : "lazy"}
       decoding="async"
       draggable={false}
       onError={() => {
-        console.warn(`[products] photo not found in images folder: ${file}`);
-        setBroken(file);
+        if (tries) console.warn(`[products] photo not found: ${file}`);
+        setFailed({ file, tries: tries + 1 });
       }}
       className={className}
     />

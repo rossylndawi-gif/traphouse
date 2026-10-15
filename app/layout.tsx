@@ -1,7 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { Archivo } from "next/font/google";
-import { CartDrawer, Footer, Header, MenuOverlay, Toast } from "@/components/Chrome";
-import { StoreProvider } from "@/components/Store";
+import SiteFrame from "@/components/SiteFrame";
 import { SHOP_NAME, SITE_URL, asset } from "@/lib/config";
 import "./globals.css";
 
@@ -32,19 +31,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en" className={archivo.variable}>
       <body className="font-sans">
-        <a href="#main" className="sr-only z-100 bg-fg px-3.5 py-2.5 text-white focus:not-sr-only focus:absolute focus:top-2 focus:left-2">
-          Skip to products
-        </a>
-        <StoreProvider>
-          <Header />
-          <MenuOverlay />
-          <main id="main" tabIndex={-1} className="min-h-[60vh] outline-none">
-            {children}
-          </main>
-          <Footer />
-          <CartDrawer />
-          <Toast />
-        </StoreProvider>
+        <SiteFrame>{children}</SiteFrame>
       </body>
     </html>
   );

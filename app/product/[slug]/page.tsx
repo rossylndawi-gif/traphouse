@@ -1,10 +1,10 @@
 import type { Metadata } from "next";
 import ProductView from "@/components/ProductView";
-import { SHOP_NAME, SITE_URL } from "@/lib/config";
+import { SHOP_NAME, SITE_URL, photo } from "@/lib/config";
 import { buildProducts } from "@/lib/build-data";
-import { priceText } from "@/lib/products";
+import { priceText, sizeNames } from "@/lib/products";
 
-/** One page per product in the sheet at build time (rebuilt hourly). */
+/** One page per product in the shop at build time (rebuilt hourly). */
 export function generateStaticParams() {
   const products = buildProducts();
   // export needs at least one page; unknown slugs fall back to 404.html, which still shows live products
@@ -17,9 +17,11 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   const { slug } = await params;
   const p = buildProducts().find((x) => x.id === slug);
   if (!p) return { title: "Product" };
+  const sizes = sizeNames(p);
+  const image = photo(p.image);
   const description = [
     p.soldOut ? "Sold out" : priceText(p),
-    p.size && `Size ${p.size}`,
+    sizes.length > 0 && `${sizes.length > 1 ? "Sizes" : "Size"} ${sizes.join(", ")}`,
     p.colors.length > 1 ? `${p.colors.length} colours` : p.colors[0],
     "Order on WhatsApp · Remera Kisimenti, Kigali",
   ]
@@ -36,9 +38,9 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
       title: `${p.name} — ${SHOP_NAME}`,
       description,
       url,
-      images: [{ url: `${SITE_URL}/images/${p.image}`, alt: p.name }],
+      images: [{ url: image, alt: p.name }],
     },
-    twitter: { card: "summary_large_image", title: `${p.name} — ${SHOP_NAME}`, description, images: [`${SITE_URL}/images/${p.image}`] },
+    twitter: { card: "summary_large_image", title: `${p.name} — ${SHOP_NAME}`, description, images: [image] },
   };
 }
 

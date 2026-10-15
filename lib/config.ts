@@ -1,10 +1,15 @@
 /**
- * Shop settings — edit these if your number, address or sheet link changes.
+ * Shop settings — edit these if your number or address changes.
  */
 
-/** Published Google Sheet (File → Share → Publish to web → CSV). */
-export const SHEET_CSV_URL =
-  "https://docs.google.com/spreadsheets/d/e/2PACX-1vS_2TF_pMLV_dfSMFkT3zxjmROTHfStT3QTFT7TeUH3hKKJpIlGcsp07kextK5pkg/pub?gid=1915751725&single=true&output=csv";
+/** Supabase project (set in .env.local and in the GitHub Actions secrets). */
+export const SUPABASE_URL = (process.env.NEXT_PUBLIC_SUPABASE_URL ?? "").replace(/\/$/, "");
+/** Publishable key: safe in the browser, it only allows what the database policies allow. */
+export const SUPABASE_KEY = process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY ?? "";
+
+/** Most of one item, and items in total, a customer can order at once (also enforced in place_order). */
+export const MAX_PER_ITEM = 5;
+export const MAX_PER_ORDER = 15;
 
 /** WhatsApp number orders go to: country code + number, no "+" or spaces. */
 export const WHATSAPP_NUMBER = "250791449915";
@@ -15,7 +20,7 @@ export const ADDRESS = "Remera Kisimenti, behind Ecobank, KG 18, Kigali, Rwanda"
 export const MAPS_URL =
   "https://www.google.com/maps/search/?api=1&query=Ecobank+Remera+Kisimenti+KG+18+Kigali";
 
-/** Order of the category buttons. Categories in the sheet but not listed here appear at the end. */
+/** Order of the category buttons. Other categories appear at the end. */
 export const CATEGORY_ORDER = [
   "Shirts",
   "T-Shirts",
@@ -34,4 +39,9 @@ export const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://rossylndawi
 
 /** Public file URL, e.g. asset("images/x.jpg") → "/traphouse/images/x.jpg". */
 export const asset = (path: string) => `${BASE_PATH}/${path.replace(/^\/+/, "")}`;
-export const photo = (file: string) => asset("images/" + file);
+
+/** Product photo URL from its path in the "products" Storage bucket. */
+export const photo = (file: string) =>
+  /^https?:\/\//.test(file) ? file : `${SUPABASE_URL}/storage/v1/object/public/products/${file.split("/").map(encodeURIComponent).join("/")}`;
+/** Copy kept in the repo for photos imported from the old site (used if Storage can't be reached). */
+export const localPhoto = (file: string) => (file.includes("/") ? null : asset("images/" + file));

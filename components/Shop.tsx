@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useRef, type FormEvent } from "react";
-import { priceText, slugify, type Product } from "@/lib/products";
+import { priceText, sizeNames, slugify, type Product } from "@/lib/products";
 import { SearchIcon } from "./icons";
 import Photo from "./Photo";
 import { useProducts } from "./Store";
@@ -47,7 +47,11 @@ export function ProductCard({ p, i }: { p: Product; i: number }) {
           {p.soldOut && <span className="sr-only">Sold out. </span>}
           <span className={p.soldOut ? "text-muted line-through" : ""}>{priceText(p)}</span>
         </p>
-        {p.size && <p className="text-xs text-muted">Size: {p.size}</p>}
+        {sizeNames(p).length > 0 && (
+          <p className="text-xs text-muted">
+            {sizeNames(p).length > 1 ? "Sizes" : "Size"}: {sizeNames(p).join(", ")}
+          </p>
+        )}
         {p.colors.length > 1 && <p className="text-xs text-muted">{p.colors.length} colours</p>}
       </Link>
     </article>
@@ -128,7 +132,7 @@ export default function ShopView() {
   let items = category ? products.filter((p) => p.category === category) : products;
   if (q) {
     const s = q.toLowerCase();
-    items = items.filter((p) => [p.name, p.category, p.size, ...p.colors].join(" ").toLowerCase().includes(s));
+    items = items.filter((p) => [p.name, p.category, ...sizeNames(p), ...p.colors].join(" ").toLowerCase().includes(s));
   }
 
   useEffect(() => {

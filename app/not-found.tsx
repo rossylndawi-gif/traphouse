@@ -7,8 +7,8 @@ import { BASE_PATH } from "@/lib/config";
 
 /**
  * GitHub Pages serves this page for any unknown address.
- * A product added to the sheet after the last build has no page of its own
- * yet, so its /product/<slug>/ link lands here: show it from the live sheet.
+ * A product added in the admin after the last build has no page of its own
+ * yet, so its /product/<slug>/ link lands here: show it from Supabase.
  */
 export default function NotFound() {
   const [slug, setSlug] = useState<string | null | undefined>(undefined);

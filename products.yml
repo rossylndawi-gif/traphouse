@@ -1,299 +1,415 @@
 # ─────────────────────────────────────────────────────────────
 #  BACKUP COPY of the product list.
-#  The website reads products from the Google Sheet. This file is only
-#  used if the sheet can't be reached, so you don't need to edit it.
-#  It is refreshed automatically from the sheet every hour.
+#  The website reads products from Supabase (the admin at /admin).
+#  This file is only used if Supabase can't be reached, so you don't
+#  need to edit it. It is refreshed automatically every hour.
 # ─────────────────────────────────────────────────────────────
 
-- name: Cropped Button-Up Shirt
+- slug: adidas-pinstripe-jersey-track-pants-set
+  name: Adidas Pinstripe Jersey & Track Pants Set
   category: Shirts
-  price: 20000
-  size: M
-  colors: [blue plaid, red plaid, red gingham, blue pink plaid, blue madras, pink]
-  images: [shirt-cropped-plaid-blue.jpg, shirt-cropped-plaid-red.jpg, shirt-cropped-gingham-red.jpg, shirt-cropped-plaid-blue-pink.jpg, shirt-cropped-madras-blue.jpg, shirt-cropped-pink.jpg]
-  image: shirt-cropped-plaid-blue.jpg
-  sold_out: false
+  price_rwf: 20000
+  colours:
+    - white red
+  main_photo: set-adidas-pinstripe-white-red.jpg
+  variants:
+    - {id: fd17aa95-1e72-484a-a2aa-55c8b81b6168, size: M (jersey) / M (pants), colour: '', available: 1}
 
-- name: Adidas Pinstripe Jersey & Track Pants Set
-  category: Shirts
-  price: 20000
-  size: M (jersey) / M (pants)
-  colors: [white red]
-  image: set-adidas-pinstripe-white-red.jpg
-  sold_out: false
-
-- name: Hellstar Logo Tee
+- slug: hellstar-logo-tee
+  name: Hellstar Logo Tee
   category: T-Shirts
-  price: 25000
-  size: L
-  colors: [white]
-  image: tee-hellstar-white-front.jpg
-  gallery: [tee-hellstar-white-back.jpg]
-  sold_out: false
+  price_rwf: 25000
+  colours:
+    - white
+  main_photo: tee-hellstar-white-front.jpg
+  extra_photos:
+    - tee-hellstar-white-back.jpg
+  variants:
+    - {id: 8dca26fc-dd40-4244-84e9-cdc79c733c3f, size: L, colour: '', available: 1}
 
-- name: Acne Studios Stockholm Tee
+- slug: acne-studios-stockholm-tee
+  name: Acne Studios Stockholm Tee
   category: T-Shirts
-  price: 25000
-  size: L
-  colors: [light blue]
-  image: tee-acne-stockholm-light-blue.jpg
-  sold_out: false
+  price_rwf: 25000
+  colours:
+    - light blue
+  main_photo: tee-acne-stockholm-light-blue.jpg
+  variants:
+    - {id: a1185373-389f-4e9c-bfc7-b84e29e50207, size: L, colour: '', available: 1}
 
-- name: Rick Owens Face Print Tee
+- slug: rick-owens-face-print-tee
+  name: Rick Owens Face Print Tee
   category: T-Shirts
-  price: 25000
-  size: L
-  colors: [white]
-  image: tee-rick-owens-face-white.jpg
-  sold_out: false
+  price_rwf: 25000
+  colours:
+    - white
+  main_photo: tee-rick-owens-face-white.jpg
+  variants:
+    - {id: 064ea410-c242-49a3-95e4-bcdca580f76d, size: L, colour: '', available: 1}
 
-- name: Collage Print Raglan Tee
+- slug: collage-print-raglan-tee
+  name: Collage Print Raglan Tee
   category: T-Shirts
-  price: 17000
-  size: M
-  colors: [cream black]
-  image: tee-raglan-collage-cream-black.jpg
-  sold_out: false
+  price_rwf: 17000
+  colours:
+    - cream black
+  main_photo: tee-raglan-collage-cream-black.jpg
+  variants:
+    - {id: 8872ab9f-db3f-4cd3-9610-2d67e5ba8e4e, size: M, colour: '', available: 1}
 
-- name: Chrome Hearts Horseshoe Tee
+- slug: chrome-hearts-horseshoe-tee
+  name: Chrome Hearts Horseshoe Tee
   category: T-Shirts
-  price: 25000
-  size: L
-  colors: [white]
-  image: tee-chrome-hearts-horseshoe-white-front.jpg
-  gallery: [tee-chrome-hearts-horseshoe-white-back.jpg]
-  sold_out: false
+  price_rwf: 25000
+  colours:
+    - white
+  main_photo: tee-chrome-hearts-horseshoe-white-front.jpg
+  extra_photos:
+    - tee-chrome-hearts-horseshoe-white-back.jpg
+  variants:
+    - {id: f51b090c-49f8-4c59-8704-428a06bbe117, size: L, colour: '', available: 1}
 
-- name: Chrome Hearts Cross Patch Tee
+- slug: chrome-hearts-cross-patch-tee
+  name: Chrome Hearts Cross Patch Tee
   category: T-Shirts
-  price: 25000
-  size: L
-  colors: [white]
-  image: tee-chrome-hearts-crosses-white.jpg
-  sold_out: false
+  price_rwf: 25000
+  colours:
+    - white
+  main_photo: tee-chrome-hearts-crosses-white.jpg
+  variants:
+    - {id: e2013500-e71d-4135-a0b4-f507dfcdfc7b, size: L, colour: '', available: 1}
 
-- name: Represent Double Distilled Tee
+- slug: represent-double-distilled-tee
+  name: Represent Double Distilled Tee
   category: T-Shirts
-  price: 22000
-  size: M
-  colors: [black]
-  image: tee-represent-dove-black.jpg
-  sold_out: true
+  price_rwf: 22000
+  colours:
+    - black
+  main_photo: tee-represent-dove-black.jpg
+  variants:
+    - {id: 39ecc865-52a2-4a68-ab2f-97d3c590223a, size: M, colour: '', available: 0}
 
-- name: Represent Thoroughbred Tee
+- slug: represent-thoroughbred-tee
+  name: Represent Thoroughbred Tee
   category: T-Shirts
-  price: 22000
-  size: L
-  colors: [sage]
-  image: tee-graphic-sage-dogs.jpg
-  sold_out: false
+  price_rwf: 22000
+  colours:
+    - sage
+  main_photo: tee-graphic-sage-dogs.jpg
+  variants:
+    - {id: 8231baf4-6f1c-49ac-bdbc-7a6d09b5bb1f, size: L, colour: '', available: 1}
 
-- name: AMI Heart Raglan Tee
+- slug: ami-heart-raglan-tee
+  name: AMI Heart Raglan Tee
   category: T-Shirts
-  price: 22000
-  size: M
-  colors: [green, red]
-  images: [tee-ami-raglan-green.jpg, tee-ami-raglan-red.jpg]
-  image: tee-ami-raglan-green.jpg
-  sold_out: false
+  price_rwf: 22000
+  colours:
+    - green
+    - red
+  colour_photos:
+    - tee-ami-raglan-green.jpg
+    - tee-ami-raglan-red.jpg
+  main_photo: tee-ami-raglan-green.jpg
+  variants:
+    - {id: 1c6d399b-1d17-4954-b9be-ececc3e9e1d3, size: M, colour: green, available: 1}
+    - {id: 08827658-cd5b-4507-bcad-54beeba3b070, size: M, colour: red, available: 1}
 
-- name: Wreath Print Long-Sleeve Tee
+- slug: wreath-print-long-sleeve-tee
+  name: Wreath Print Long-Sleeve Tee
   category: T-Shirts
-  price: 20000
-  size: L
-  colors: [navy]
-  image: tee-longsleeve-wreath-navy.jpg
-  sold_out: false
+  price_rwf: 20000
+  colours:
+    - navy
+  main_photo: tee-longsleeve-wreath-navy.jpg
+  variants:
+    - {id: 3b6a2f38-7f09-4346-8a09-219be9ce7070, size: L, colour: '', available: 1}
 
-- name: Striped Long-Sleeve Polo
+- slug: striped-long-sleeve-polo
+  name: Striped Long-Sleeve Polo
   category: Polos & Knits
-  price: 20000
-  size: M
-  colors: [blue]
-  image: polo-striped-longsleeve-blue.jpg
-  sold_out: true
+  price_rwf: 20000
+  colours:
+    - blue
+  main_photo: polo-striped-longsleeve-blue.jpg
+  variants:
+    - {id: 94ff25db-d0ff-404e-aec7-5fd96c87fcb6, size: M, colour: '', available: 0}
 
-- name: Chrome Hearts Striped Polo
+- slug: chrome-hearts-striped-polo
+  name: Chrome Hearts Striped Polo
   category: Polos & Knits
-  price: 30000
-  size: M
-  colors: [black pink]
-  image: polo-chrome-hearts-striped-black-front.jpg
-  gallery: [polo-chrome-hearts-striped-black-back.jpg]
-  sold_out: false
+  price_rwf: 30000
+  colours:
+    - black pink
+  main_photo: polo-chrome-hearts-striped-black-front.jpg
+  extra_photos:
+    - polo-chrome-hearts-striped-black-back.jpg
+  variants:
+    - {id: 18d11faf-9f8a-49fc-bada-9dc14f833155, size: M, colour: '', available: 1}
 
-- name: Aztec Quarter-Zip Pullover
+- slug: aztec-quarter-zip-pullover
+  name: Aztec Quarter-Zip Pullover
   category: Polos & Knits
-  price: 35000
-  size: M
-  colors: [brown]
-  image: knit-quarter-zip-aztec-brown.jpg
-  sold_out: false
+  price_rwf: 35000
+  colours:
+    - brown
+  main_photo: knit-quarter-zip-aztec-brown.jpg
+  variants:
+    - {id: 7169d0f0-0e9f-4f46-8f53-3eff28524f8f, size: M, colour: '', available: 1}
 
-- name: Ralph Lauren Quarter-Zip Sweater
+- slug: ralph-lauren-quarter-zip-sweater
+  name: Ralph Lauren Quarter-Zip Sweater
   category: Polos & Knits
-  price: 40000
-  size: M
-  colors: [orange]
-  image: knit-quarter-zip-ralph-lauren-orange.jpg
-  sold_out: false
+  price_rwf: 40000
+  colours:
+    - orange
+  main_photo: knit-quarter-zip-ralph-lauren-orange.jpg
+  variants:
+    - {id: 8c7dae70-dd3b-4508-a813-a607844a2d3e, size: M, colour: '', available: 1}
 
-- name: Y/Project Paris Tank
+- slug: y-project-paris-tank
+  name: Y/Project Paris Tank
   category: Tanks
-  price: 17000
-  size: M
-  colors: [white]
-  image: tank-yproject-white.jpg
-  sold_out: false
+  price_rwf: 17000
+  colours:
+    - white
+  main_photo: tank-yproject-white.jpg
+  variants:
+    - {id: 72a5a791-c083-4075-8e47-8ca0e99ffde3, size: M, colour: '', available: 1}
 
-- name: Represent Double Distilled Tank
+- slug: represent-double-distilled-tank
+  name: Represent Double Distilled Tank
   category: Tanks
-  price: 17000
-  size: M
-  colors: [black]
-  image: tank-represent-dove-black.jpg
-  sold_out: false
+  price_rwf: 17000
+  colours:
+    - black
+  main_photo: tank-represent-dove-black.jpg
+  variants:
+    - {id: 44b46cf1-c99a-43da-a10f-e877997b29d5, size: M, colour: '', available: 1}
 
-- name: Eyes Zip Hoodie
+- slug: eyes-zip-hoodie
+  name: Eyes Zip Hoodie
   category: Hoodies & Jackets
-  price: 40000
-  size: L
-  colors: [grey]
-  image: hoodie-zip-eyes-grey-front.jpg
-  gallery: [hoodie-zip-eyes-grey-back.jpg]
-  sold_out: false
+  price_rwf: 40000
+  colours:
+    - grey
+  main_photo: hoodie-zip-eyes-grey-front.jpg
+  extra_photos:
+    - hoodie-zip-eyes-grey-back.jpg
+  variants:
+    - {id: e5b29ba8-cd11-4e39-b262-27d707447004, size: L, colour: '', available: 1}
 
-- name: Mask Zip Hoodie
+- slug: mask-zip-hoodie
+  name: Mask Zip Hoodie
   category: Hoodies & Jackets
-  price: 40000
-  size: L
-  colors: [black]
-  image: hoodie-zip-mask-black-front.jpg
-  gallery: [hoodie-zip-mask-black-back.jpg]
-  sold_out: false
+  price_rwf: 40000
+  colours:
+    - black
+  main_photo: hoodie-zip-mask-black-front.jpg
+  extra_photos:
+    - hoodie-zip-mask-black-back.jpg
+  variants:
+    - {id: dd06c408-6663-4731-8fca-2c907d9e32e5, size: L, colour: '', available: 1}
 
-- name: Mood Zip Hoodie
+- slug: mood-zip-hoodie
+  name: Mood Zip Hoodie
   category: Hoodies & Jackets
-  price: 40000
-  size: L
-  colors: [grey]
-  image: hoodie-zip-mood-grey-front.jpg
-  gallery: [hoodie-zip-mood-grey-back.jpg]
-  sold_out: true
+  price_rwf: 40000
+  colours:
+    - grey
+  main_photo: hoodie-zip-mood-grey-front.jpg
+  extra_photos:
+    - hoodie-zip-mood-grey-back.jpg
+  variants:
+    - {id: 589c6e84-cfba-4229-a898-a921a5965252, size: L, colour: '', available: 0}
 
-- name: Fear Zip Hoodie
+- slug: fear-zip-hoodie
+  name: Fear Zip Hoodie
   category: Hoodies & Jackets
-  price: 40000
-  size: L
-  colors: [grey]
-  image: hoodie-zip-fear-grey-front.jpg
-  gallery: [hoodie-zip-fear-grey-back.jpg]
-  sold_out: false
+  price_rwf: 40000
+  colours:
+    - grey
+  main_photo: hoodie-zip-fear-grey-front.jpg
+  extra_photos:
+    - hoodie-zip-fear-grey-back.jpg
+  variants:
+    - {id: ccbb3c52-660e-4089-8d7d-5bf6f2372dff, size: L, colour: '', available: 1}
 
-- name: Kanji Sun Zip Hoodie
+- slug: kanji-sun-zip-hoodie
+  name: Kanji Sun Zip Hoodie
   category: Hoodies & Jackets
-  price: 40000
-  size: L
-  colors: [grey]
-  image: hoodie-zip-kanji-sun-grey-front.jpg
-  gallery: [hoodie-zip-kanji-sun-grey-back.jpg]
-  sold_out: false
+  price_rwf: 40000
+  colours:
+    - grey
+  main_photo: hoodie-zip-kanji-sun-grey-front.jpg
+  extra_photos:
+    - hoodie-zip-kanji-sun-grey-back.jpg
+  variants:
+    - {id: 449fa060-8962-474a-8f3a-70eb09188ee8, size: L, colour: '', available: 1}
 
-- name: Sacrifice Zip Hoodie
+- slug: sacrifice-zip-hoodie
+  name: Sacrifice Zip Hoodie
   category: Hoodies & Jackets
-  price: 45000
-  size: L
-  colors: [grey]
-  image: hoodie-zip-sacrifice-grey-front.jpg
-  gallery: [hoodie-zip-sacrifice-grey-back.jpg]
-  sold_out: false
+  price_rwf: 45000
+  colours:
+    - grey
+  main_photo: hoodie-zip-sacrifice-grey-front.jpg
+  extra_photos:
+    - hoodie-zip-sacrifice-grey-back.jpg
+  variants:
+    - {id: 5daaafbe-443e-440c-a058-75a51998f330, size: L, colour: '', available: 1}
 
-- name: Work Jacket
+- slug: work-jacket
+  name: Work Jacket
   category: Hoodies & Jackets
-  price: 45000
-  size: L
-  colors: [rust]
-  image: jacket-work-rust-corduroy-collar.jpg
-  sold_out: false
+  price_rwf: 45000
+  colours:
+    - rust
+  main_photo: jacket-work-rust-corduroy-collar.jpg
+  variants:
+    - {id: bb9afbd0-d607-4b58-a68a-cdd6cc976ac9, size: L, colour: '', available: 1}
 
-- name: Painted Carpenter Jeans
+- slug: painted-carpenter-jeans
+  name: Painted Carpenter Jeans
   category: Bottoms
-  price: 40000
-  size: '32'
-  colors: [black]
-  image: jeans-painted-black.jpg
-  sold_out: false
+  price_rwf: 40000
+  colours:
+    - black
+  main_photo: jeans-painted-black.jpg
+  variants:
+    - {id: 529072c0-5bc7-4d7a-b1f0-b90fcebbf772, size: '32', colour: '', available: 1}
 
-- name: Flared Jeans Grey Wash
+- slug: flared-jeans-grey-wash
+  name: Flared Jeans Grey Wash
   category: Bottoms
-  price: 40000
-  size: '32'
-  colors: [grey]
-  image: jeans-flared-grey.jpg
-  sold_out: false
+  price_rwf: 40000
+  colours:
+    - grey
+  main_photo: jeans-flared-grey.jpg
+  variants:
+    - {id: 975917c2-6335-4be7-9135-7df9311d4868, size: '32', colour: '', available: 1}
 
-- name: Flared Jeans Black Wash
+- slug: flared-jeans-black-wash
+  name: Flared Jeans Black Wash
   category: Bottoms
-  price: 40000
-  size: '32'
-  colors: [black]
-  image: jeans-flared-black.jpg
-  sold_out: false
+  price_rwf: 40000
+  colours:
+    - black
+  main_photo: jeans-flared-black.jpg
+  variants:
+    - {id: 3e5f30c0-ee82-4a5d-bfe9-1a4cbeb83d87, size: '32', colour: '', available: 1}
 
-- name: Baggy Jeans Vintage Wash
+- slug: baggy-jeans-vintage-wash
+  name: Baggy Jeans Vintage Wash
   category: Bottoms
-  price: 40000
-  size: '32'
-  colors: [vintage blue]
-  image: jeans-baggy-vintage-wash.jpg
-  sold_out: false
+  price_rwf: 40000
+  colours:
+    - vintage blue
+  main_photo: jeans-baggy-vintage-wash.jpg
+  variants:
+    - {id: 95b97388-5dae-4228-8d2a-6de08d158754, size: '32', colour: '', available: 1}
 
-- name: Wide-Leg Sweatpants Black
+- slug: wide-leg-sweatpants-black
+  name: Wide-Leg Sweatpants Black
   category: Bottoms
-  price: 35000
-  size: M
-  colors: [black]
-  image: sweatpants-wide-black.jpg
-  sold_out: false
+  price_rwf: 35000
+  colours:
+    - black
+  main_photo: sweatpants-wide-black.jpg
+  variants:
+    - {id: 8677a2d0-ddc3-42bb-8433-0ce7f3450a59, size: M, colour: '', available: 1}
 
-- name: Wide-Leg Sweatpants Pink
+- slug: wide-leg-sweatpants-pink
+  name: Wide-Leg Sweatpants Pink
   category: Bottoms
-  price: 35000
-  size: M
-  colors: [pink]
-  image: sweatpants-wide-pink.jpg
-  sold_out: false
+  price_rwf: 35000
+  colours:
+    - pink
+  main_photo: sweatpants-wide-pink.jpg
+  variants:
+    - {id: 5af0a994-46a9-46c3-89cb-bc2a8ad675e0, size: M, colour: '', available: 1}
 
-- name: Wide-Leg Sweatpants Grey
+- slug: wide-leg-sweatpants-grey
+  name: Wide-Leg Sweatpants Grey
   category: Bottoms
-  price: 35000
-  size: M
-  colors: [grey]
-  image: sweatpants-wide-grey.jpg
-  sold_out: false
+  price_rwf: 35000
+  colours:
+    - grey
+  main_photo: sweatpants-wide-grey.jpg
+  variants:
+    - {id: c0879259-b485-44ea-87c2-5c35c8f46dca, size: M, colour: '', available: 1}
 
-- name: Designer Boxers
+- slug: designer-boxers
+  name: Designer Boxers
   category: Boxers
-  price: 10000
-  size: M
-  colors: [Supreme black, Supreme navy, Corteiz white, Corteiz black, Corteiz navy, Corteiz Alcatraz white, Corteiz Alcatraz grey, Corteiz Alcatraz black, Syna white, Syna grey, Champion black, Chrome Hearts white, Prada black, PSD white]
-  images: [boxers-supreme-black.jpg, boxers-supreme-navy.jpg, boxers-corteiz-script-white.jpg, boxers-corteiz-script-black.jpg, boxers-corteiz-script-navy.jpg, boxers-corteiz-alcatraz-white.jpg, boxers-corteiz-alcatraz-grey.jpg, boxers-corteiz-alcatraz-black.jpg, boxers-syna-white.jpg, boxers-syna-grey.jpg, boxers-champion-black.jpg, boxers-chrome-hearts-white.jpg, boxers-prada-black.jpg, boxers-psd-white.jpg]
-  image: boxers-collage.jpg
-  sold_out: false
+  price_rwf: 10000
+  colours:
+    - Supreme black
+    - Supreme navy
+    - Corteiz white
+    - Corteiz black
+    - Corteiz navy
+    - Corteiz Alcatraz white
+    - Corteiz Alcatraz grey
+    - Corteiz Alcatraz black
+    - Syna white
+    - Syna grey
+    - Champion black
+    - Chrome Hearts white
+    - Prada black
+    - PSD white
+  colour_photos:
+    - boxers-supreme-black.jpg
+    - boxers-supreme-navy.jpg
+    - boxers-corteiz-script-white.jpg
+    - boxers-corteiz-script-black.jpg
+    - boxers-corteiz-script-navy.jpg
+    - boxers-corteiz-alcatraz-white.jpg
+    - boxers-corteiz-alcatraz-grey.jpg
+    - boxers-corteiz-alcatraz-black.jpg
+    - boxers-syna-white.jpg
+    - boxers-syna-grey.jpg
+    - boxers-champion-black.jpg
+    - boxers-chrome-hearts-white.jpg
+    - boxers-prada-black.jpg
+    - boxers-psd-white.jpg
+  main_photo: boxers-collage.jpg
+  variants:
+    - {id: f23c5b4a-bc8d-4337-a05e-bb06008f3d22, size: M, colour: Supreme black, available: 1}
+    - {id: 05ec074f-d36b-43f8-9a94-9ab5111da3c9, size: M, colour: Supreme navy, available: 1}
+    - {id: be21fe02-13bb-49b2-94e9-0d262e969ab3, size: M, colour: Corteiz white, available: 1}
+    - {id: 76a8f2f4-54b2-4948-a514-cfefce7998ea, size: M, colour: Corteiz black, available: 1}
+    - {id: 8e0f92b5-fd65-477f-9c6a-dfc2452fba29, size: M, colour: Corteiz navy, available: 1}
+    - {id: 9c9cf4ef-63c3-40bd-bc09-05a59d62b8d0, size: M, colour: Corteiz Alcatraz white, available: 1}
+    - {id: 52d5f0ab-e283-4006-8f4c-e38173f39f3b, size: M, colour: Corteiz Alcatraz grey, available: 1}
+    - {id: 29d197d3-e13a-4ab5-8883-b5ee0de2ae61, size: M, colour: Corteiz Alcatraz black, available: 1}
+    - {id: 94647fab-7842-4ad4-b5f1-e8500d2b55bd, size: M, colour: Syna white, available: 1}
+    - {id: 4e5c60ff-0073-47af-80fa-a72442c4daea, size: M, colour: Syna grey, available: 1}
+    - {id: 0ffd3b87-b280-4671-b990-fdea70309f38, size: M, colour: Champion black, available: 1}
+    - {id: bb190eb4-304f-4a35-808b-16b9ca799573, size: M, colour: Chrome Hearts white, available: 1}
+    - {id: 553e422f-6a5b-4bea-84b1-1117357201f8, size: M, colour: Prada black, available: 1}
+    - {id: 48285ada-a2d3-4608-ab42-20d443420c43, size: M, colour: PSD white, available: 1}
 
-- name: Goyard Saint Leger Backpack
+- slug: goyard-saint-leger-backpack
+  name: Goyard Saint Leger Backpack
   category: Accessories
-  price: 45000
-  size: One Size
-  colors: [blue]
-  image: bag-backpack-goyard-blue.jpg
-  gallery: [bag-backpack-goyard-blue-front.jpg, bag-backpack-goyard-blue-back.jpg, bag-backpack-goyard-blue-worn-1.jpg, bag-backpack-goyard-blue-worn-2.jpg]
-  sold_out: false
+  price_rwf: 45000
+  colours:
+    - blue
+  main_photo: bag-backpack-goyard-blue.jpg
+  extra_photos:
+    - bag-backpack-goyard-blue-front.jpg
+    - bag-backpack-goyard-blue-back.jpg
+    - bag-backpack-goyard-blue-worn-1.jpg
+    - bag-backpack-goyard-blue-worn-2.jpg
+  variants:
+    - {id: e2929d72-0a52-4f4b-ab8d-5a10d7a29a50, size: One Size, colour: '', available: 1}
 
-- name: Cross Patch Crossbody Bag
+- slug: cross-patch-crossbody-bag
+  name: Cross Patch Crossbody Bag
   category: Accessories
-  price: 35000
-  size: One Size
-  colors: [black]
-  image: bag-crossbody-black-crosses.jpg
-  sold_out: false
+  price_rwf: 35000
+  colours:
+    - black
+  main_photo: bag-crossbody-black-crosses.jpg
+  variants:
+    - {id: bc2ecf9f-e684-41ee-89f9-b6517ee881ef, size: One Size, colour: '', available: 1}

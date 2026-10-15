@@ -1,32 +1,59 @@
 "use client";
 
 import { createContext, useCallback, useContext, useEffect, useMemo, useRef, useState } from "react";
-import { CATEGORY_ORDER } from "@/lib/config";
-import { loadProducts } from "@/lib/load";
-import { categoriesOf, type Product } from "@/lib/products";
+import { CATEGORY_ORDER, MAX_PER_ITEM, MAX_PER_ORDER } from "@/lib/config";
+import { loadProducts, type Loaded } from "@/lib/load";
+import { categoriesOf, type Product, type Variant } from "@/lib/products";
 
-/* ── Products (live from the sheet) ───────────────────── */
+/* ── Products (live from Supabase) ────────────────────── */
 
 type ProductsState = {
   status: "loading" | "ready";
   products: Product[];
   categories: string[];
-  source: "sheet" | "backup" | "none" | null;
+  source: Loaded["source"] | null;
   get: (id: string) => Product | undefined;
+  /** Load again, e.g. after something sold out while the page was open. */
+  refresh: () => Promise<void>;
 };
 const ProductsCtx = createContext<ProductsState | null>(null);
 
-/* ── Cart (saved on the phone) ────────────────────────── */
+/* ── Cart + customer details (saved on the phone) ─────── */
 
-export type CartLine = { id: string; color: string; qty: number };
+export type CartLine = { id: string; variant: string; color: string; qty: number };
+export type Customer = { name: string; phone: string };
 type CartState = {
   lines: CartLine[];
   count: number;
-  add: (id: string, color: string) => void;
-  setQty: (index: number, qty: number) => void;
+  /** Returns an error message if the limit or the stock is reached. */
+  add: (id: string, variant: string, color: string) => string | null;
+  setQty: (index: number, qty: number) => string | null;
+  clear: () => void;
+  customer: Customer;
+  setCustomer: (c: Customer) => void;
 };
 const CartCtx = createContext<CartState | null>(null);
-const CART_KEY = "ths-cart";
+const CART_KEY = "ths-cart-v2";
+const CUSTOMER_KEY = "ths-customer";
+
+const read = <T,>(key: string, fallback: T): T => {
+  try {
+    return JSON.parse(localStorage.getItem(key) || "null") ?? fallback;
+  } catch {
+    return fallback;
+  }
+};
+const write = (key: string, value: unknown) => {
+  try {
+    localStorage.setItem(key, JSON.stringify(value));
+  } catch {
+    /* private mode: lasts for this visit */
+  }
+};
+const validLines = (raw: unknown): CartLine[] =>
+  Array.isArray(raw)
+    ? raw.filter((l) => l && typeof l.id === "string" && typeof l.variant === "string" && typeof l.color === "string" && l.qty > 0)
+    : [];
 
 /* ── Panels + toast ───────────────────────────────────── */
 
@@ -36,13 +63,17 @@ const UICtx = createContext<UIState | null>(null);
 
 export function StoreProvider({ children }: { children: React.ReactNode }) {
   /* products */
-  const [loaded, setLoaded] = useState<{ products: Product[]; source: ProductsState["source"] } | null>(null);
+  const [loaded, setLoaded] = useState<Loaded | null>(null);
   useEffect(() => {
     let live = true;
     loadProducts().then((r) => live && setLoaded(r));
     return () => {
       live = false;
     };
+  }, []);
+  const refresh = useCallback(async () => {
+    const r = await loadProducts(true);
+    if (r.source !== "none") setLoaded(r);
   }, []);
   const products = useMemo(() => loaded?.products ?? [], [loaded]);
   const productsState = useMemo<ProductsState>(
@@ -52,64 +83,104 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
       categories: categoriesOf(products, CATEGORY_ORDER),
       source: loaded?.source ?? null,
       get: (id) => products.find((p) => p.id === id),
+      refresh,
     }),
-    [loaded, products],
+    [loaded, products, refresh],
   );
 
   /* cart */
   const [lines, setLines] = useState<CartLine[]>([]);
+  const [customer, setCustomerState] = useState<Customer>({ name: "", phone: "" });
   const hydrated = useRef(false);
   useEffect(() => {
-    try {
-      const raw = JSON.parse(localStorage.getItem(CART_KEY) || "[]");
-      if (Array.isArray(raw)) setLines(raw.filter((l) => l && typeof l.id === "string" && l.qty > 0));
-    } catch {
-      /* storage unavailable */
-    }
+    setLines(validLines(read(CART_KEY, [])));
+    const c = read<Partial<Customer>>(CUSTOMER_KEY, {});
+    setCustomerState({ name: String(c.name ?? ""), phone: String(c.phone ?? "") });
     hydrated.current = true;
     const onStorage = (e: StorageEvent) => {
-      if (e.key !== CART_KEY) return;
-      try {
-        setLines(JSON.parse(e.newValue || "[]"));
-      } catch {
-        /* ignore */
-      }
+      if (e.key === CART_KEY) setLines(validLines(read(CART_KEY, [])));
     };
     window.addEventListener("storage", onStorage);
     return () => window.removeEventListener("storage", onStorage);
   }, []);
   useEffect(() => {
-    if (!hydrated.current) return;
-    try {
-      localStorage.setItem(CART_KEY, JSON.stringify(lines));
-    } catch {
-      /* private mode: cart lasts for this visit */
-    }
+    if (hydrated.current) write(CART_KEY, lines);
   }, [lines]);
-  // Once live data is in, drop items that were removed or sold out
+  const setCustomer = useCallback((c: Customer) => {
+    setCustomerState(c);
+    write(CUSTOMER_KEY, c);
+  }, []);
+
+  // Once live data is in, drop sizes that no longer exist (sold-out ones stay, flagged in the cart)
   useEffect(() => {
-    if (!loaded || !loaded.products.length) return;
+    if (!loaded || loaded.source === "none") return;
     setLines((ls) => {
-      const kept = ls.filter((l) => {
-        const p = loaded.products.find((x) => x.id === l.id);
-        return p && !p.soldOut;
-      });
+      const kept = ls.filter((l) => loaded.products.some((p) => p.id === l.id && p.variants.some((v) => v.id === l.variant)));
       return kept.length === ls.length ? ls : kept;
     });
   }, [loaded]);
 
-  const add = useCallback((id: string, color: string) => {
-    setLines((ls) => {
-      const i = ls.findIndex((l) => l.id === id && l.color === color);
-      return i >= 0 ? ls.map((l, k) => (k === i ? { ...l, qty: Math.min(l.qty + 1, 99) } : l)) : [...ls, { id, color, qty: 1 }];
-    });
+  const findVariant = useCallback(
+    (id: string, variant: string): Variant | undefined => products.find((p) => p.id === id)?.variants.find((v) => v.id === variant),
+    [products],
+  );
+
+  /** Why `line` (at `index` in `ls`) can't have its qty, or null if it can. */
+  const overLimit = useCallback(
+    (ls: CartLine[], index: number, line: CartLine) => {
+      const others = ls.reduce((n, l, k) => (k === index ? n : n + l.qty), 0);
+      const sameSize = ls.reduce((n, l, k) => (k !== index && l.variant === line.variant ? n + l.qty : n), 0);
+      const stock = (findVariant(line.id, line.variant)?.available ?? Infinity) - sameSize;
+      if (line.qty > stock) return stock > 0 ? `Only ${stock + sameSize} left in this size` : "This size is sold out";
+      if (line.qty > MAX_PER_ITEM) return `You can order up to ${MAX_PER_ITEM} of the same item`;
+      if (others + line.qty > MAX_PER_ORDER) return `You can order up to ${MAX_PER_ORDER} items at a time`;
+      return null;
+    },
+    [findVariant],
+  );
+
+  // add/setQty read the latest lines without re-creating the callbacks
+  const linesRef = useRef(lines);
+  useEffect(() => {
+    linesRef.current = lines;
+  }, [lines]);
+  const commit = useCallback((ls: CartLine[]) => {
+    linesRef.current = ls;
+    setLines(ls);
   }, []);
-  const setQty = useCallback((index: number, qty: number) => {
-    setLines((ls) => (qty <= 0 ? ls.filter((_, k) => k !== index) : ls.map((l, k) => (k === index ? { ...l, qty: Math.min(qty, 99) } : l))));
-  }, []);
+
+  const add = useCallback(
+    (id: string, variant: string, color: string) => {
+      const ls = linesRef.current;
+      const i = ls.findIndex((l) => l.variant === variant && l.color === color);
+      const line = i >= 0 ? { ...ls[i], qty: ls[i].qty + 1 } : { id, variant, color, qty: 1 };
+      const why = overLimit(ls, i >= 0 ? i : ls.length, line);
+      if (why) return why;
+      commit(i >= 0 ? ls.map((l, k) => (k === i ? line : l)) : [...ls, line]);
+      return null;
+    },
+    [overLimit, commit],
+  );
+  const setQty = useCallback(
+    (index: number, qty: number) => {
+      const ls = linesRef.current;
+      if (qty <= 0) {
+        commit(ls.filter((_, k) => k !== index));
+        return null;
+      }
+      const line = { ...ls[index], qty };
+      // lowering is always allowed, even when the line is over a limit
+      const why = qty > ls[index].qty ? overLimit(ls, index, line) : null;
+      if (why) return why;
+      commit(ls.map((l, k) => (k === index ? line : l)));
+      return null;
+    },
+    [overLimit, commit],
+  );
+  const clear = useCallback(() => commit([]), [commit]);
   const cartState = useMemo<CartState>(
-    () => ({ lines, count: lines.reduce((n, l) => n + l.qty, 0), add, setQty }),
-    [lines, add, setQty],
+    () => ({ lines, count: lines.reduce((n, l) => n + l.qty, 0), add, setQty, clear, customer, setCustomer }),
+    [lines, add, setQty, clear, customer, setCustomer],
   );
 
   /* ui */
@@ -119,7 +190,7 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
   const toast = useCallback((m: string) => {
     setMessage(m);
     clearTimeout(timer.current);
-    timer.current = setTimeout(() => setMessage(""), 2200);
+    timer.current = setTimeout(() => setMessage(""), 2600);
   }, []);
   const ui = useMemo<UIState>(
     () => ({ panel, open: setPanel, close: () => setPanel(null), toast, message }),
