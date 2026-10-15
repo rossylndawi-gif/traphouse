@@ -6,6 +6,7 @@
     "dev": "next dev",
     "prebuild": "node scripts/snapshot.mjs",
     "build": "next build",
+    "postbuild": "node scripts/flatten-rsc.mjs",
     "start": "npx serve out",
     "test:db": "node --test supabase/tests/flows.test.mjs"
   },

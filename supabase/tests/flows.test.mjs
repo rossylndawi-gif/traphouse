@@ -345,6 +345,37 @@ test("editing sizes: adjustments are logged, reserved stock is protected", async
   assert.equal(variantOf(again, "L").id, L);
 });
 
+test("saving the form doesn't undo a sale that happened while it was open", async () => {
+  const cat = (await catalog()).find((p) => p.id === tee.id);
+  const XL = variantOf(cat, "XL").id;
+  const [{ on_hand: before }] = await as(ADMIN, "select on_hand from public.variants where id = $1", [XL]);
+  const others = cat.variants.filter((v) => v.id !== XL);
+  const rows = async () =>
+    Promise.all(
+      [XL, ...others.map((v) => v.id)].map(async (id) => {
+        const [v] = await as(ADMIN, "select id, size, colour, on_hand from public.variants where id = $1", [id]);
+        return v;
+      }),
+    );
+  const form = (await rows()).map((v) => ({ id: v.id, size: v.size, colour: v.colour, on_hand: v.on_hand, on_hand_before: v.on_hand }));
+  // the form is open… meanwhile one XL is sold in the shop
+  await rpc(ADMIN, "record_sale", { p_items: [{ variant_id: XL, qty: 1, unit_price: 25000 }] });
+  // …then the form is saved with only the name changed
+  await rpc(ADMIN, "save_product", {
+    p: { id: tee.id, name: "Hellstar Logo Tee", category: "T-Shirts", price_rwf: 25000, colours: ["white"], main_photo: "a.jpg", variants: form },
+  });
+  const [{ on_hand: afterSave }] = await as(ADMIN, "select on_hand from public.variants where id = $1", [XL]);
+  assert.equal(afterSave, before - 1, "the sale is kept");
+
+  // a number the admin actually changed is applied
+  form[0].on_hand = 7;
+  await rpc(ADMIN, "save_product", {
+    p: { id: tee.id, name: "Hellstar Logo Tee", category: "T-Shirts", price_rwf: 25000, colours: ["white"], main_photo: "a.jpg", variants: form },
+  });
+  const [{ on_hand: edited }] = await as(ADMIN, "select on_hand from public.variants where id = $1", [XL]);
+  assert.equal(edited, 7);
+});
+
 /* ── Per-colour stock, limits, hidden products ──────────── */
 
 test("stock per colour: one colour can sell out while another is in stock", async () => {
